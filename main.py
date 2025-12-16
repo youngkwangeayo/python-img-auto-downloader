@@ -31,7 +31,12 @@ class ImageDownloader:
         self.s3_base_url = self.config['s3_base_url']
         self.batch_size = self.config['batch_size']
         self.output_dir = Path(self.config['output_directory'])
-        self.log_file = self.config['log_file']
+
+        # 로그 디렉토리 및 날짜별 로그 파일 설정
+        log_dir = Path(self.config['log_directory'])
+        log_dir.mkdir(parents=True, exist_ok=True)
+        today = datetime.now().strftime('%Y%m%d')
+        self.log_file = log_dir / f"{today}_download.log"
 
         self.output_dir.mkdir(parents=True, exist_ok=True)
 

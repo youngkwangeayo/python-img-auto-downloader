@@ -173,3 +173,10 @@ auto-img-save/
 ## 라이센스
 
 내부 사용 전용
+
+
+## 실행방법
+- python3 -m venv venv
+- source venv/bin/activate
+- pip install -r requirements.txt
+- python main.py
