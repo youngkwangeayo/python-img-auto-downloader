@@ -1,0 +1,35 @@
+# Python 가상환경
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 다운로드된 이미지
+downloaded_images/
+
+# 압축 파일
+compressed/
+*.zip
+*.tar.gz
+
+# 로그 파일
+download_log.txt
+
+# IDE 설정
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 맥 OS
+.DS_Store
+
+# 설정 파일 (민감 정보 포함)
+config.json
+origin_config.json
+
+# 작업 관련 임시 파일
+md/private/*
+log

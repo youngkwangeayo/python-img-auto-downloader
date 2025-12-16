@@ -1,0 +1,21 @@
+{
+  "database": {
+    "host": "dbaddr",
+    "port": 3306,
+    "user": "dbuser",
+    "password": "dbpass",
+    "database": "dbName"
+  },
+  "ssh_tunnel": {
+    "enabled": true,
+    "ssh_host": "jumpehostaddr",
+    "ssh_user": "jumpeUser",
+    "ssh_key_path": "/localKeyPass",
+    "remote_bind_address": "dbaddr",
+    "remote_bind_port": 3306
+  },
+  "s3_base_url": "s3URL/",
+  "batch_size": 1000,
+  "output_directory": "./downloaded_images",
+  "log_file": "./download_log.txt"
+}
