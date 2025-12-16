@@ -21,8 +21,12 @@ from sshtunnel import SSHTunnelForwarder
 
 
 class ImageDownloader:
-    def __init__(self, config_path='config.json'):
+    def __init__(self, config_path='../config.json'):
         """설정 파일을 로드하고 초기화"""
+        # config 파일의 디렉토리를 base directory로 사용 (프로젝트 루트)
+        config_path = Path(config_path)
+        self.base_dir = config_path.parent.resolve()
+
         with open(config_path, 'r', encoding='utf-8') as f:
             self.config = json.load(f)
 
@@ -30,10 +34,12 @@ class ImageDownloader:
         self.ssh_config = self.config.get('ssh_tunnel', {})
         self.s3_base_url = self.config['s3_base_url']
         self.batch_size = self.config['batch_size']
-        self.output_dir = Path(self.config['output_directory'])
+
+        # 모든 경로를 base_dir 기준으로 해석
+        self.output_dir = self.base_dir / self.config['output_directory']
 
         # 로그 디렉토리 및 날짜별 로그 파일 설정
-        log_dir = Path(self.config['log_directory'])
+        log_dir = self.base_dir / self.config['log_directory']
         log_dir.mkdir(parents=True, exist_ok=True)
         today = datetime.now().strftime('%Y%m%d')
         self.log_file = log_dir / f"{today}_download.log"
@@ -345,9 +351,9 @@ class ImageDownloader:
 
 def main():
     """프로그램 진입점"""
-    if not os.path.exists('config.json'):
+    if not os.path.exists('../config.json'):
         print("ERROR: config.json 파일을 찾을 수 없습니다.")
-        print("config.json 파일을 생성하고 데이터베이스 정보를 입력하세요.")
+        print("프로젝트 루트에 config.json 파일을 생성하고 데이터베이스 정보를 입력하세요.")
         sys.exit(1)
 
     downloader = ImageDownloader()

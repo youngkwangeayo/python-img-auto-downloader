@@ -18,15 +18,19 @@ class ImageCompressor:
         압축기 초기화
 
         Args:
-            source_dir: 압축할 소스 디렉토리
-            output_dir: 압축 파일을 저장할 디렉토리
+            source_dir: 압축할 소스 디렉토리 (프로젝트 루트 기준 상대 경로)
+            output_dir: 압축 파일을 저장할 디렉토리 (프로젝트 루트 기준 상대 경로)
         """
-        self.source_dir = Path(source_dir)
-        self.output_dir = Path(output_dir)
+        # 프로젝트 루트 디렉토리 계산 (src의 부모 디렉토리)
+        self.base_dir = Path(__file__).parent.parent.resolve()
+
+        # 모든 경로를 base_dir 기준으로 해석
+        self.source_dir = self.base_dir / source_dir
+        self.output_dir = self.base_dir / output_dir
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
         # 로그 디렉토리 및 날짜별 로그 파일 설정
-        log_dir = Path('./log/compress')
+        log_dir = self.base_dir / 'log/compress'
         log_dir.mkdir(parents=True, exist_ok=True)
         today = datetime.now().strftime('%Y%m%d')
         self.log_file = log_dir / f"{today}_compress.log"
